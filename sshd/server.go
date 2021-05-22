@@ -1,7 +1,6 @@
 package sshd
 
 import (
-	"errors"
 	"fmt"
 	"net"
 	"sync"
@@ -116,9 +115,7 @@ func (s *SSHServer) run() {
 	for {
 		c, err := s.listener.Accept()
 		if err != nil {
-			if !errors.Is(err, net.ErrClosed) {
-				s.l.WithError(err).Warn("Error in listener, shutting down")
-			}
+			s.l.WithError(err).Warn("Error in listener, shutting down")
 			return
 		}
 
